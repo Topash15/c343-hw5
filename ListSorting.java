@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class ListSorting
 {
@@ -77,7 +78,7 @@ public class ListSorting
         mlist.head = sortedlist.head;
     }
     
-    // return the middile node of a list
+    // return the middle node of a list
     public static Mynode getMiddle(Mylist list)
     {
         Mynode head = list.head;
@@ -97,12 +98,39 @@ public class ListSorting
         }
     }
     
-    // merge two sorted list and retun the merged list
+    // merge two sorted list and return the merged list
     public static Mylist mergeLists(Mylist m1, Mylist m2){
         Mylist result = new Mylist();
         // your code goes here
         // merge two sorted lists (increasing order) m1 and m2 into list result
         // return result, which should also be sorted and in increasing order
+        Stack<Integer> tempStack = new Stack<>();
+
+        Mynode L1 = m1.head;
+        Mynode L2 = m2.head;
+
+        while(L1 != null && L2 != null){
+            if(L2.value > L1.value){
+                tempStack.push(L1.value);
+                L1 = L1.next;
+            } else {
+                tempStack.push(L2.value);
+                L2 = L2.next;
+            }
+        }
+        while(L1 != null){
+            tempStack.push(L1.value);
+            L1 = L1.next;
+        }
+        while(L2 != null){
+            tempStack.push(L2.value);
+            L2 = L2.next;
+        }        
+
+        while(!tempStack.isEmpty()){
+            result.add(tempStack.pop());
+        }
+
         return result;
     }
 }
