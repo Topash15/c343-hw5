@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ListSorting
 {
     public static void selectionSort(Mylist mlist)
@@ -5,6 +7,47 @@ public class ListSorting
         // your code goes here:
         // follow selection sort algorithm to
         // sort mlist in increasing order of node values
+
+        // temp storage of all values
+        ArrayList<Integer> values = new ArrayList<Integer>();
+
+        Mynode target = mlist.head;
+
+        // if list is empty or one item, return as is
+        if(target.next == null || target == null){
+            return;
+        }
+
+        values.add(target.value);
+        while(target.next != null){
+            values.add(target.next.value);
+            target = target.next;
+        }
+
+        int min, temp;
+        int array_size = values.size();
+
+        for (int i = 0; i < array_size-1; i++){
+            min = i;
+
+            for(int j = i+1; j < array_size; j++){
+
+                if(values.get(j) < values.get(min)){
+                    min = j;
+                }
+
+                temp = values.get(i);
+                values.set(i, values.get(min));
+                values.set(min, temp);
+            }
+        }
+
+        // recreates sorted list from arrayList
+        mlist.head = null;
+        for(int i = values.size()-1; i >=0 ; i--){
+            mlist.add(values.get(i));
+        }
+          
     }
     
     // recursive function to sort mlist
@@ -54,9 +97,8 @@ public class ListSorting
         }
     }
     
-    // merge two soted list and retun the merged list
-    public static Mylist mergeLists(Mylist m1, Mylist m2)
-    {
+    // merge two sorted list and retun the merged list
+    public static Mylist mergeLists(Mylist m1, Mylist m2){
         Mylist result = new Mylist();
         // your code goes here
         // merge two sorted lists (increasing order) m1 and m2 into list result
